@@ -54,12 +54,6 @@ extension CSSearchBar: UITextFieldDelegate {
         // вариант noDataView я не предусмотрел. Просто не получится ввести несуществующий запрос
         return !filteredItems.isEmpty
     }
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        // наверное нужна кнопка cancel. Сейчас мы всё пытаемся сделать одной кнопкой
-        textField.text = ""
-        endEditing(true)
-        return false
-    }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

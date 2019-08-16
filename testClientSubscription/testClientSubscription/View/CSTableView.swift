@@ -74,19 +74,16 @@ extension CSTableView: UITableViewDataSource {
     
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let defaultCell = UITableViewCell()
-        guard var countItems = items?.count else { return defaultCell }
         switch sections[indexPath.section] {
         case .Subscriptions:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseID) as? SubscriptionCell
                 else { return defaultCell }
-            // в результате поиска может оставаться одна услуга, отсюда не используем indexPath.item
-            let index = countItems > indexPath.item ? indexPath.item : 0
-            guard let subscription = items?[index] else { return defaultCell }
+            guard let subscription = items?[indexPath.item] else { return defaultCell }
             cell.setup(subscription)
             return cell
         case .Button:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: oneButtonCellreuseID) as? OneButtonCell
-                else { return defaultCell }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: oneButtonCellreuseID) as? OneButtonCell,
+            var countItems = items?.count else { return defaultCell }
             countItems -= minVisibleItemsCount
             cell.setup(isShowAllItems, countItems) {
                 self.isShowAllItems.toggle()
